@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { observer } from "mobx-react";
+import AddCodeForm from "./components/AddCodeForm";
+import codeStore from "./CodeStore";
+import { reorderList } from "./utils"; // Implement this function to reorder your list
+import Droppables from "./components/Droppables";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const handleAddCode = name => {
+    const randomCode = Math.floor(Math.random() * 1000000);
+    codeStore.addCode(name, randomCode);
+  };
+
+  const handleDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+
+    const reorderedCodes = reorderList(
+      codeStore.codes,
+      result.source.index,
+      result.destination.index
+    );
+
+    codeStore.reorderCodes(reorderedCodes);
+  };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <div>
+          <div className='flex justify-between'>
+            <Link to={"/addcode"} className='text-blue-300 text-3xl'>
+              +
+            </Link>
+            <h1 className='text-2xl font-semibold mb-4'>2FA Codes</h1>
+          </div>
+          <Droppables codes={codeStore.codes} onDragEnded={handleDragEnd} />
+        </div>
+      ),
+    },
+    {
+      path: "/addcode",
+      element: <AddCodeForm onAddCode={handleAddCode} />,
+    },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className='app max-w-lg mx-auto p-6'>
+      <RouterProvider router={router} />
+    </div>
+  );
+};
 
-export default App
+export default observer(App);
