@@ -38,8 +38,13 @@ class CodeStore {
     this.addCode(name, randomCode);
   }
 
-  reorderCodes(newCodes) {
-    this.codes = newCodes;
+  // reorderCodes(newCodes) {
+  //   this.codes = newCodes;
+  // }
+  reorderCodes(draggedIndex, targetIndex) {
+    // Reorder codes by moving the dragged code to the target index
+    const draggedCode = this.codes.splice(draggedIndex, 1)[0];
+    this.codes.splice(targetIndex, 0, draggedCode);
   }
 
   resetCode(index) {

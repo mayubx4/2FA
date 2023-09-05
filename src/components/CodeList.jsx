@@ -1,14 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react";
 import codeStore from "../CodeStore";
-import Draggables from "./Draggables";
+import Draggable from "./Draggable";
 
 const CodeList = () => {
   const codes = codeStore.codes;
   return (
     <>
       {codes.map((code, index) => (
-        <Draggables
+        <Draggable
           key={String(code.code)}
           name={code.name}
           code={code.code}

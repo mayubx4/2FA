@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { observer } from "mobx-react";
 import CircularProgressBar from "./CircularProgressBar";
-import CodeStore from "../CodeStore";
-import icon from '../assets/react.svg'
+import icon from "../assets/react.svg";
 
-const CodeItem = ({ index, name, code, timeRemaining }) => {
-  // const [remainingTime, setRemainingTime] = useState(timeRemaining);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (remainingTime > 0) setRemainingTime(remainingTime - 1);
-  //     else CodeStore.resetCode(index);
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [remainingTime]);
-
+const CodeItem = ({  name, code, timeRemaining }) => {
   return (
     <>
-    <img src={icon}/>
+      <img src={icon} alt='React Icon' />
       <div className='mr-4'>
         <div className='text-base font-medium'>{name}</div>
         <div className='text-gray-600'>
@@ -34,4 +21,4 @@ const CodeItem = ({ index, name, code, timeRemaining }) => {
   );
 };
 
-export default CodeItem;
+export default observer(CodeItem);

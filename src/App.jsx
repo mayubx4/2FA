@@ -3,8 +3,8 @@ import { observer } from "mobx-react";
 import AddCodeForm from "./components/AddCodeForm";
 import codeStore from "./CodeStore";
 import { reorderList } from "./utils"; // Implement this function to reorder your list
-import Droppables from "./components/Droppables";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import CodeList from "./components/CodeList";
 
 const App = () => {
   const handleAddCode = name => {
@@ -36,7 +36,7 @@ const App = () => {
             </Link>
             <h1 className='text-2xl font-semibold mb-4'>2FA Codes</h1>
           </div>
-          <Droppables codes={codeStore.codes} onDragEnded={handleDragEnd} />
+          <CodeList codes={codeStore.codes} onDragEnded={handleDragEnd} />
         </div>
       ),
     },
