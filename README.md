@@ -16,3 +16,11 @@ To start the development server, run the following command:
 ```bash
 npm run dev
 ```
+
+To run test cases, run the following command:
+
+```bash
+npm run jest
+```
+
+NOTE: dev and build command will run test command first if all test case passes then it will continue otherwise it will through an error
